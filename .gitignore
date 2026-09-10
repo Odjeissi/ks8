@@ -1,0 +1,24 @@
+# Kubernetes secrets
+*.env
+
+# Local Kubernetes configs
+.kube/
+kubeconfig
+kubeconfig-*
+
+# Helm
+charts/*.tgz
+*.tgz
+
+# Kustomize generated files
+*.generated.yaml
+*.generated.yml
+
+# Local/editor files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Logs
+*.log

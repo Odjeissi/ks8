@@ -1,0 +1,15 @@
+provider:
+  name: aws
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::497862080253:role/eksctl-demo-eks-addon-iamserviceaccount-kube--Role1-bZZpYUBvAnDt
+
+policy: sync
+
+sources:
+  - service
+  - ingress
+
+registry: txt
+
+interval: 1m
