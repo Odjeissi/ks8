@@ -10,7 +10,7 @@ namespace: dev
 
 labels:
   - pairs:
-     app: cloud-app
+      app: cloud-app
     includeSelectors: false
     includeTemplates: false
 
