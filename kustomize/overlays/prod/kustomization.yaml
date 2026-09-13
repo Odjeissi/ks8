@@ -7,8 +7,8 @@ namespace: prod
 labels:
   - pairs:
       app: cloud-app
-    includeSelectors: false
-    includeTemplates: false
+    includeSelectors: true
+    includeTemplates: true
 images:
   - name: 497862080253.dkr.ecr.us-east-1.amazonaws.com/project/my-app
     newTag: 12ade6a6
