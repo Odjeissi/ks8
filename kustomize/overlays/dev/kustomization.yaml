@@ -11,7 +11,7 @@ labels:
     includeTemplates: false
 images:
   - name: 497862080253.dkr.ecr.us-east-1.amazonaws.com/project/my-app
-    newTag: 5d9b234d
+    newTag: cc3d80f9
 patches:
   - path: replicas-patch.yaml
     target:
