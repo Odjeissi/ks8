@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: dev
   labels:
-    app: cloud-app
+    app: cloud-app # This label allows the ClusterExternalSecret to select this namespace
 ---
 apiVersion: v1
 kind: Namespace
