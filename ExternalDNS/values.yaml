@@ -2,7 +2,7 @@ provider:
   name: aws
 serviceAccount:
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::497862080253:role/eksctl-demo-eks-addon-iamserviceaccount-kube--Role1-bZZpYUBvAnDt
+    eks.amazonaws.com/role-arn: arn:aws:iam::497862080253:role/eksctl-demo-eks-addon-iamserviceaccount-kube--Role1-7E1kflutDRoD
 
 policy: sync
 

@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL:
+    repoURL: git@github.com:Odjeissi/ks8.git
     targetRevision: HEAD
     path: kustomize/overlays/prod
   destination:
