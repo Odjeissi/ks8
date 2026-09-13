@@ -6,7 +6,7 @@ namePrefix: dev-
 namespace: dev
 labels:
   - pairs:
-      app: cloud-app
+      app: my-app
     includeSelectors: true
     includeTemplates: true
 images:

@@ -6,7 +6,7 @@ namePrefix: prod-
 namespace: prod
 labels:
   - pairs:
-      app: cloud-app
+      app: my-app
     includeSelectors: true
     includeTemplates: true
 images:
