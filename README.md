@@ -53,19 +53,19 @@ ks8/
 
 ### Main Parts
 
-**Kustomize**  
+**Kustomize**
 Used to manage Kubernetes manifests and the development environment.
 
-**Argo CD**  
+**Argo CD**
 Watches this GitHub repository and automatically syncs changes to EKS.
 
-**ExternalDNS**  
+**ExternalDNS**
 Manages DNS records in AWS Route 53 from Kubernetes.
 
-**External Secrets Operator**  
+**External Secrets Operator**
 Used to manage application secrets without storing sensitive values directly in Git.
 
-**Policies**  
+**Policies**
 Contains Kubernetes security and policy configuration.
 
 ## CI/CD Flow
@@ -159,10 +159,6 @@ New version appears in the browser
 ### CI/CD Updating the GitOps Repository
 
 ![GitLab deploy job](screenshots/gitlab-deploy.png)
-
-### GitOps Repository
-
-![ks8 repository](screenshots/ks8-repo.png)
 
 ### Argo CD Sync
 
