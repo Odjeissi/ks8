@@ -1,4 +1,4 @@
-# AWS EKS GitOps Project
+# End-to-End AWS EKS Deployment with GitOps
 
 This project shows a full CI/CD and GitOps deployment flow using **GitLab CI/CD, Docker, Amazon ECR, Terraform, Kubernetes, Argo CD, Kustomize, ExternalDNS, and AWS EKS**.
 
