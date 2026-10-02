@@ -9,5 +9,6 @@ spec:
   selector:
     app: my-app
   ports:
-    - port: 80
+    - name: app-service
+      port: 80
       targetPort: 5000

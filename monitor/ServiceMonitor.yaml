@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: app-service-monitor
+  namespace: monitoring
+  labels:
+    release: prometheus # Must match the serviceMonitorSelector defined in your Prometheus deployment
+spec:
+
+  namespaceSelector:    # look in this namespace
+    matchNames:
+      - dev
+
+  selector:
+    matchLabels:
+      app: my-app # Target Kubernetes Service with this metadata label
+
+  endpoints:
+  - port: app-service # Name of the port on the Service exposing Prometheus metrics
+    interval: 15s
+    path: /metrics
