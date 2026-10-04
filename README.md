@@ -88,6 +88,14 @@ Prometheus collects metrics including:
 
 Grafana uses Prometheus as its data source to visualize these metrics.
 
+### Grafana Application Dashboard
+
+The dashboard provides visibility into application health, traffic, latency, errors, and resource usage.
+
+![Grafana Application Dashboard](screenshots/Requests.png)
+
+![Grafana System Metrics Dashboard](screenshots/System_Metrics.png)
+
 ## Repository Structure
 
 ```text
