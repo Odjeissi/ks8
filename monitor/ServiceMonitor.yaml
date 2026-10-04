@@ -13,7 +13,7 @@ spec:
 
   selector:
     matchLabels:
-      app: employees-app # Target Kubernetes Service with this metadata label
+      app: my-app # Target Kubernetes Service with this metadata label
 
   endpoints:
   - port: app-service # Name of the port on the Service exposing Prometheus metrics

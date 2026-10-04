@@ -4,8 +4,6 @@ metadata:
   name: my-service
   annotations:
     alb.ingress.kubernetes.io/healthcheck-path: /health
-  labels:
-    app: employees-app
 spec:
   type: ClusterIP
   selector:
