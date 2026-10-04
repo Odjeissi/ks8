@@ -1,43 +1,92 @@
-# End-to-End AWS EKS Deployment with GitOps
+# End-to-End AWS EKS GitOps Deployment with Observability
 
-This project shows a full CI/CD and GitOps deployment flow using **GitLab CI/CD, Docker, Amazon ECR, Terraform, Kubernetes, Argo CD, Kustomize, ExternalDNS, and AWS EKS**.
+This project demonstrates a complete CI/CD, GitOps, and observability workflow for deploying a containerized Python Flask application to Amazon EKS.
 
-The project is split into 3 repositories:
+It uses **GitLab CI/CD, Docker, Amazon ECR, Terraform, Kubernetes, Argo CD, Kustomize, ExternalDNS, External Secrets Operator, Prometheus, and Grafana**.
 
-- [code_source_eks](https://github.com/Odjeissi/code_source_eks) — application code and CI pipeline
-- [iac-eks](https://github.com/Odjeissi/iac-eks) — AWS infrastructure with Terraform
-- [ks8](https://github.com/Odjeissi/ks8) — Kubernetes manifests and GitOps configuration
-
-## How It Works
+## Architecture
 
 ```text
-Developer pushes code
-        |
-        v
+Developer
+   |
+   v
 GitLab CI/CD
-        |
-        v
-Run tests
-        |
-        v
-Build Docker image
-        |
-        v
-Push image to Amazon ECR
-        |
-        v
-Update image tag in ks8 repo
-        |
-        v
-Argo CD detects the change
-        |
-        v
-Deploy new version to Amazon EKS
+   |
+   +--> Run Tests
+   |
+   +--> Build Docker Image
+             |
+             v
+        Amazon ECR
+             |
+             v
+      Update GitOps Repo
+             |
+             v
+          Argo CD
+             |
+             v
+        Amazon EKS
+             |
+      +------+------+
+      |             |
+      v             v
+  Flask App     Kubernetes
+      |
+      | /metrics
+      v
+  Prometheus
+      |
+      v
+    Grafana
+      |
+      v
+Monitoring Dashboards
 ```
 
-The CI pipeline does not deploy directly to Kubernetes.
+GitLab CI/CD builds and pushes the application image to Amazon ECR, then updates the image tag in the GitOps repository.
 
-Instead, it updates the image tag inside the `ks8` repository. Argo CD watches this repository and syncs the new version to the EKS cluster.
+Argo CD watches the repository and automatically synchronizes the desired Kubernetes configuration with Amazon EKS.
+
+Prometheus collects application and runtime metrics from the Flask application, and Grafana visualizes them through monitoring dashboards.
+
+## Repositories
+
+- [code_source_eks](https://github.com/Odjeissi/code_source_eks) — Flask application and GitLab CI/CD pipeline
+- [iac-eks](https://github.com/Odjeissi/iac-eks) — AWS infrastructure provisioned with Terraform
+- [ks8](https://github.com/Odjeissi/ks8) — Kubernetes, GitOps, monitoring, and observability configuration
+
+## Key Features
+
+- Automated CI pipeline with GitLab CI/CD
+- Docker image build and push to Amazon ECR
+- Amazon EKS infrastructure provisioned with Terraform
+- GitOps deployments with Argo CD
+- Kubernetes environment management with Kustomize
+- Automated DNS management with ExternalDNS and Route 53
+- Secret management with External Secrets Operator
+- Prometheus application and runtime metrics
+- Grafana dashboards for application health and performance
+
+## Monitoring & Observability
+
+The Flask application exposes Prometheus metrics through a `/metrics` endpoint.
+
+Prometheus collects metrics including:
+
+- Request throughput
+- HTTP status codes
+- Error rate
+- Requests in progress
+- Request duration
+- Latency percentiles: p50, p90, p95, and p99
+- Pod/process uptime
+- CPU usage
+- Memory usage
+- Open file descriptors
+- Python garbage collection metrics
+
+Grafana uses Prometheus as its data source to visualize these metrics.
 
 ## Repository Structure
 
@@ -48,125 +97,35 @@ ks8/
 ├── ExternalDNS/
 ├── eso/
 ├── policies/
+├── monitor/
+├── app_dashboard/
+├── screenshots/
 └── .gitignore
 ```
 
-### Main Parts
-
-**Kustomize**
-Used to manage Kubernetes manifests and the development environment.
-
-**Argo CD**
-Watches this GitHub repository and automatically syncs changes to EKS.
-
-**ExternalDNS**
-Manages DNS records in AWS Route 53 from Kubernetes.
-
-**External Secrets Operator**
-Used to manage application secrets without storing sensitive values directly in Git.
-
-**Policies**
-Contains Kubernetes security and policy configuration.
-
-## CI/CD Flow
-
-The application pipeline runs these steps:
+## Deployment Flow
 
 ```text
-Test
-  |
-  v
-Build Docker Image
-  |
-  v
-Push to ECR
-  |
-  v
-Update Kustomize Image Tag
-  |
-  v
-Push change to GitHub
+Code Push
+   ↓
+GitLab CI/CD
+   ↓
+Tests
+   ↓
+Docker Build
+   ↓
+Amazon ECR
+   ↓
+GitOps Repository Update
+   ↓
+Argo CD Sync
+   ↓
+Amazon EKS
+   ↓
+Prometheus Metrics
+   ↓
+Grafana Dashboards
 ```
-
-The Docker image uses the Git commit SHA as the tag.
-
-Example:
-
-```text
-f230c049
-```
-
-The deploy job updates the image tag in the Kustomize configuration:
-
-```yaml
-images:
-  - name: <ECR_IMAGE>
-    newTag: f230c049
-```
-
-Then Argo CD sees the Git change and deploys the new image to EKS.
-
-## Testing the Full Deployment Flow
-
-To test the full CI/CD and GitOps flow, I made a simple change to the application navbar.
-
-Before:
-
-```text
-Employee Directory V1.0
-```
-
-After:
-
-```text
-Employee Directory V2.1
-```
-
-This small change helped confirm the full process from application code to the running Kubernetes application.
-
-```text
-Change application code
-        |
-        v
-Push to GitLab
-        |
-        v
-Pipeline runs
-        |
-        v
-New Docker image pushed to ECR
-        |
-        v
-ks8 image tag updated
-        |
-        v
-Argo CD syncs
-        |
-        v
-New version appears in the browser
-```
-
-## Screenshots
-
-### Application Before Deployment
-
-![Employee Directory V1.0](screenshots/app-v1.png)
-
-### GitLab CI/CD
-
-![GitLab CI/CD](screenshots/gitlab-repo.png)
-
-### CI/CD Updating the GitOps Repository
-
-![GitLab deploy job](screenshots/gitlab-deploy.png)
-
-### Argo CD Sync
-
-![Argo CD](screenshots/argocd-sync.png)
-
-### Application After Deployment
-
-![Employee Directory V2.1](screenshots/app-v2.png)
 
 ## Tools Used
 
@@ -180,20 +139,11 @@ New version appears in the browser
 - Kustomize
 - ExternalDNS
 - External Secrets Operator
-- GitHub
+- Prometheus
+- Grafana
 - Python / Flask
+- GitHub
 
-## What I Learned
+## What This Project Demonstrates
 
-This project helped me understand how a CI/CD and GitOps workflow works from start to finish.
-
-I practiced:
-
-- building and pushing Docker images
-- using GitLab CI/CD
-- deploying applications to EKS
-- using Terraform for AWS infrastructure
-- using Argo CD for GitOps
-- using Kustomize to manage Kubernetes deployments
-- updating image versions automatically
-- separating application, infrastructure, and Kubernetes configuration into different repositories
+This project shows how CI/CD, GitOps, Kubernetes, cloud infrastructure, secret management, DNS automation, and observability can work together in a modern DevOps workflow.
