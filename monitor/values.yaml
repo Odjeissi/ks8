@@ -1,3 +1,6 @@
+# EKS Fargate: explicitly define CPU and memory because the default
+# Fargate resources were not sufficient for Prometheus and Grafana.
+
 grafana:
   resources:
     requests:
