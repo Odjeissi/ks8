@@ -10,7 +10,7 @@ labels:
     includeSelectors: true
     includeTemplates: true
 images:
-  - name: 497862080253.dkr.ecr.us-east-1.amazonaws.com/project/my-app
+  - name: <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/project/my-app
     newTag: a80b33af
 patches:
   - path: replicas-patch.yaml

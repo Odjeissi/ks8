@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: 497862080253.dkr.ecr.us-east-1.amazonaws.com/project/my-app:a80b33af
+        image: <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/project/my-app:a80b33af
         imagePullPolicy: IfNotPresent   # IfNotPresent # Pull the image only if it is not already available on the node
         ports:
         - containerPort: 5000
