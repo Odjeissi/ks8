@@ -6,43 +6,7 @@ It uses **GitLab CI/CD, Docker, Amazon ECR, Terraform, Kubernetes, Argo CD, Kust
 
 ## Architecture
 
-```text
-Developer
-   |
-   v
-GitLab CI/CD
-   |
-   +--> Run Tests
-   |
-   +--> Build Docker Image
-             |
-             v
-        Amazon ECR
-             |
-             v
-      Update GitOps Repo
-             |
-             v
-          Argo CD
-             |
-             v
-        Amazon EKS
-             |
-      +------+------+
-      |             |
-      v             v
-  Flask App     Kubernetes
-      |
-      | /metrics
-      v
-  Prometheus
-      |
-      v
-    Grafana
-      |
-      v
-Monitoring Dashboards
-```
+![architecture](screenshots/architecture.png)
 
 GitLab CI/CD builds and pushes the application image to Amazon ECR, then updates the image tag in the GitOps repository.
 
